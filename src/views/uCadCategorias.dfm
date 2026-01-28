@@ -22,7 +22,7 @@ object frmCadCategorias: TfrmCadCategorias
     Top = 0
     Width = 811
     Height = 534
-    ActivePage = tabListagem
+    ActivePage = tblManutencao
     Align = alClient
     TabOrder = 0
     object tabListagem: TTabSheet
@@ -58,6 +58,8 @@ object frmCadCategorias: TfrmCadCategorias
         Height = 423
         Align = alClient
         DataSource = dtsListagem
+        ParentShowHint = False
+        ShowHint = False
         TabOrder = 1
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clWindowText
@@ -65,16 +67,18 @@ object frmCadCategorias: TfrmCadCategorias
         TitleFont.Name = 'Segoe UI'
         TitleFont.Style = []
         OnDblClick = grdListagemDblClick
-        OnTitleClick = grdListagemTitleClick
         Columns = <
           item
             Expanded = False
-            FieldName = 'categoria_id'
+            FieldName = 'CATEGORIA_ID'
+            Title.Caption = 'ID'
+            Width = 132
             Visible = True
           end
           item
             Expanded = False
-            FieldName = 'descricao'
+            FieldName = 'DESCRICAO'
+            Width = 374
             Visible = True
           end>
       end
@@ -100,7 +104,7 @@ object frmCadCategorias: TfrmCadCategorias
         Tag = 1
         Left = 11
         Top = 104
-        Width = 307
+        Width = 500
         Height = 23
         EditLabel.Width = 51
         EditLabel.Height = 15
@@ -119,16 +123,22 @@ object frmCadCategorias: TfrmCadCategorias
     Align = alBottom
     TabOrder = 1
     object btnNovo: TBitBtn
-      Left = 4
+      Left = 44
       Top = 6
       Width = 75
       Height = 25
       Caption = 'NOVO'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
       TabOrder = 0
       OnClick = btnNovoClick
     end
     object btnAlterar: TBitBtn
-      Left = 85
+      Left = 141
       Top = 6
       Width = 75
       Height = 25
@@ -137,7 +147,7 @@ object frmCadCategorias: TfrmCadCategorias
       OnClick = btnAlterarClick
     end
     object btnCancelar: TBitBtn
-      Left = 166
+      Left = 238
       Top = 6
       Width = 75
       Height = 25
@@ -146,7 +156,7 @@ object frmCadCategorias: TfrmCadCategorias
       OnClick = btnCancelarClick
     end
     object btnGravar: TBitBtn
-      Left = 247
+      Left = 338
       Top = 6
       Width = 75
       Height = 25
@@ -154,47 +164,27 @@ object frmCadCategorias: TfrmCadCategorias
       TabOrder = 3
       OnClick = btnGravarClick
     end
-    object dbNavegar: TDBNavigator
-      Left = 411
-      Top = 1
-      Width = 399
-      Height = 39
-      VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
-      Align = alRight
-      TabOrder = 4
-    end
     object btnExcluir: TBitBtn
-      Left = 328
+      Left = 440
       Top = 6
       Width = 75
       Height = 25
       Caption = 'EXCLUIR'
-      TabOrder = 5
+      TabOrder = 4
       OnClick = btnExcluirClick
     end
   end
-  object qryListagem: TFDQuery
-    Connection = dtmConexao.FDConnection1
+  object qryListagem: TZQuery
+    Connection = dtmConexao.conOracle
     SQL.Strings = (
       'SELECT CATEGORIA_ID, DESCRICAO FROM CATEGORIAS')
-    Left = 628
+    Params = <>
+    Left = 436
     Top = 42
-    object qryListagemcategoria_id: TIntegerField
-      DisplayLabel = 'C'#243'digo'
-      FieldName = 'categoria_id'
-      Origin = 'categoria_id'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
-    end
-    object qryListagemdescricao: TWideStringField
-      DisplayLabel = 'Descri'#231#227'o'
-      FieldName = 'descricao'
-      Origin = 'descricao'
-      Size = 30
-    end
   end
   object dtsListagem: TDataSource
     DataSet = qryListagem
-    Left = 724
+    Left = 524
     Top = 42
   end
 end

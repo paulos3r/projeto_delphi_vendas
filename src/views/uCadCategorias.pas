@@ -5,11 +5,9 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.ExtCtrls, Data.DB,
-  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
-  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   Vcl.Buttons, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask,
-  uDTMConexao, cCadCategoria, uEnumEstadoCadastro;
+  uDTMConexao, uCategoria, uEnumEstadoCadastro, ZAbstractRODataset,
+  ZAbstractDataset, ZDataset;
 
 type
   TfrmCadCategorias = class(TForm)
@@ -20,19 +18,16 @@ type
     btnAlterar: TBitBtn;
     btnCancelar: TBitBtn;
     btnGravar: TBitBtn;
-    dbNavegar: TDBNavigator;
     btnExcluir: TBitBtn;
-    qryListagem: TFDQuery;
-    dtsListagem: TDataSource;
     Panel2: TPanel;
     mksPesquisar: TMaskEdit;
     btnListagemPesquisa: TBitBtn;
-    grdListagem: TDBGrid;
     tblManutencao: TTabSheet;
-    qryListagemcategoria_id: TIntegerField;
-    qryListagemdescricao: TWideStringField;
     edtCategoriaId: TLabeledEdit;
     edtDescricao: TLabeledEdit;
+    qryListagem: TZQuery;
+    dtsListagem: TDataSource;
+    grdListagem: TDBGrid;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -95,7 +90,15 @@ end;
 
 procedure TfrmCadCategorias.btnExcluirClick(Sender: TObject);
 begin
+
+  oCategoria.categoria_id:= StrToInt( edtCategoriaId.Text) ;
+  oCategoria.Excluir;
+
   ShowMessage('DELETADO');
+
+  pgcPrincipal.ActivePage := tabListagem;
+
+  LimparEdits;
 
   qryListagem.Refresh;
 end;
@@ -109,20 +112,24 @@ begin
     abort;
   end;
 
-
-  if edtDescricao.Text <> EmptyStr then begin
-    ShowMessage('Campo obrigatório');
-    edtDescricao.SetFocus;
-    abort;
-  end;
-
   oCategoria.descricao:=edtDescricao.Text;
 
-  oCategoria.Gravar;
+  if edtCategoriaId.Text <> EmptyStr then begin
+    oCategoria.Atualizar;
+  end
+  else begin
+    oCategoria.Inserir;
+  end;
+
+  LimparEdits;
 
   ShowMessage('GRAVADO');
 
+  tabListagem.TabVisible := true;
+  pgcPrincipal.ActivePage:=tabListagem;
+
   qryListagem.Refresh;
+
 end;
 
 procedure TfrmCadCategorias.btnNovoClick(Sender: TObject);
@@ -149,11 +156,32 @@ end;
 
 procedure TfrmCadCategorias.FormCreate(Sender: TObject);
 begin
- qryListagem.Connection := dtmConexao.FDConnection1; //criar a conexao sempre que criar
- dtsListagem.DataSet := qryListagem;                 // vincuklar datasurce
- grdListagem.DataSource := dtsListagem;              // vincular na grid
+  try
+    //conexão com banco oracle
+    qryListagem.Connection := dtmConexao.conOracle;
 
- oCategoria:= TCategoria.Create(dtmConexao.FDConnection1);
+    // preciso validar se o select está ok e se nao tem nem um problema
+    with qryListagem do  begin
+      Close;
+      SQL.Clear;
+      SQL.Text:= 'SELECT CATEGORIA_ID, DESCRICAO FROM CATEGORIAS';
+      Open;
+    end;
+
+    dtsListagem.DataSet := qryListagem;
+    grdListagem.DataSource := dtsListagem;
+
+    oCategoria:= TCategoria.Create(dtmConexao.conOracle);
+
+  except on e:Exception do
+
+      ShowMessage(
+        'Não foi possível carregar as categorias.' + sLineBreak +
+        'Verifique a conexão com o banco de dados e tente novamente.'
+      );
+
+  end;
+
 end;
 
 procedure TfrmCadCategorias.FormShow(Sender: TObject);
@@ -163,6 +191,7 @@ begin
 
   if (qryListagem.SQL.Text<>EmptyStr) then begin
     qryListagem.Open;
+    qryListagem.Active:=true;
   end;
 end;
 

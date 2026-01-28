@@ -2,11 +2,13 @@ program Vendas;
 
 uses
   Vcl.Forms,
-  uPrincipal in 'uPrincipal.pas' {frmPrincipal},
-  uDTMConexao in 'datamodule\uDTMConexao.pas' {dtmConexao: TDataModule},
-  uCadCategorias in 'views\uCadCategorias.pas' {frmCadCategorias},
-  cCadCategoria in 'classes\cCadCategoria.pas',
-  uEnumEstadoCadastro in 'classes\uEnumEstadoCadastro.pas';
+  uPrincipal in 'src\uPrincipal.pas' {frmPrincipal},
+  uDTMConexao in 'src\infrastructure\datamodule\uDTMConexao.pas' {dtmConexao: TDataModule},
+  uCadCategorias in 'src\views\uCadCategorias.pas' {frmCadCategorias},
+  uCategoria in 'src\domain\uCategoria.pas',
+  uEnumEstadoCadastro in 'src\domain\uEnumEstadoCadastro.pas',
+  uCategoriaRepository in 'src\infrastructure\repository\uCategoriaRepository.pas',
+  uCategoriaService in 'src\services\uCategoriaService.pas';
 
 {$R *.res}
 
@@ -14,6 +16,5 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
-  Application.CreateForm(TdtmConexao, dtmConexao);
   Application.Run;
 end.

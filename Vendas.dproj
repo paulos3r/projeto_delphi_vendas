@@ -125,21 +125,23 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="uPrincipal.pas">
+        <DCCReference Include="src\uPrincipal.pas">
             <Form>frmPrincipal</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="datamodule\uDTMConexao.pas">
+        <DCCReference Include="src\infrastructure\datamodule\uDTMConexao.pas">
             <Form>dtmConexao</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="views\uCadCategorias.pas">
+        <DCCReference Include="src\views\uCadCategorias.pas">
             <Form>frmCadCategorias</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="classes\cCadCategoria.pas"/>
-        <DCCReference Include="classes\uEnumEstadoCadastro.pas"/>
+        <DCCReference Include="src\domain\uCategoria.pas"/>
+        <DCCReference Include="src\domain\uEnumEstadoCadastro.pas"/>
+        <DCCReference Include="src\infrastructure\repository\uCategoriaRepository.pas"/>
+        <DCCReference Include="src\services\uCategoriaService.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

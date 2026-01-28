@@ -1,14 +1,14 @@
-unit cCadCategoria;
+unit uCategoria;
 
 interface
 
-uses System.Classes,System.SysUtils,Vcl.Controls, Vcl.ExtCtrls, Vcl.Dialogs, FireDAC.Comp.Client;
+uses System.Classes,System.SysUtils,Vcl.Controls, Vcl.ExtCtrls, Vcl.Dialogs, FireDAC.Comp.Client,ZConnection,ZDataset;
 
 type
   TCategoria = class
 
   private
-    ConexaoDB:TFDConnection;
+    ConexaoDB:TZConnection;
 
     Fcategoria_id:Integer;
     Fdescricao:String;
@@ -19,7 +19,7 @@ type
     procedure setDescricao(const Value: String);
 
   public
-    constructor Create(aConexao:TFDConnection);
+    constructor Create(aConexao:TZConnection);
     destructor Destroy; override;
 
     function Gravar:Boolean;
@@ -40,18 +40,15 @@ implementation
 { TCategoria }
 
 {$REGION '___CONSTRUCTOR E DESTRUCTOR___'}
-constructor TCategoria.Create(aConexao:TFDConnection);
+constructor TCategoria.Create(aConexao:TZConnection);
 begin
  ConexaoDB:=aConexao;
- ShowMessage('Criete');
 end;
 
 destructor TCategoria.Destroy;
 begin
 
   inherited;
-
-  ShowMessage('destroi');
 end;
 {$ENDREGION}
 
@@ -89,41 +86,41 @@ end;
 
 {$REGION '___FUNCIONALIDADES___'}
 function TCategoria.Atualizar: Boolean;
-var qry:TFDQuery;
+var qry:TZQuery;
 begin
-try
-  qry:= TFDQuery.Create(nil);
-  qry.Connection:= ConexaoDB;
-
-  qry.SQL.Clear;
-  qry.SQL.Add(
-  ' UPDATE categorias ' +
-  ' SET descricao= :descricao ' +
-  ' WHERE categoria_id= :categoria_id '
-  );
-
-  qry.ParamByName('categoria_id').AsInteger := Self.Fcategoria_id;
-  qry.ParamByName('descricao').AsString     := Self.Fdescricao;
-
   try
-    qry.ExecSQL;
-    Result:=true;
-  except
-    Result:=false;
+    qry:= TZQuery.Create(nil);
+    qry.Connection:= ConexaoDB;
+
+    qry.SQL.Clear;
+    qry.SQL.Add(
+    ' UPDATE categorias ' +
+    ' SET descricao= :descricao ' +
+    ' WHERE categoria_id= :categoria_id '
+    );
+
+    qry.ParamByName('categoria_id').AsInteger := Self.Fcategoria_id;
+    qry.ParamByName('descricao').AsString     := Self.Fdescricao;
+
+    try
+      qry.ExecSQL;
+      Result:=true;
+    except
+      Result:=false;
+    end;
+
+  finally
+
+    if Assigned(qry) then begin
+      FreeAndNil(qry);
+    end;
+
   end;
-
-finally
-
-  if Assigned(qry) then begin
-    FreeAndNil(qry);
-  end;
-
-end;
 
 end;
 
 function TCategoria.Excluir: Boolean;
-var qry:TFDQuery;
+var qry:TZQuery;
 begin
   if MessageDlg(
       'Apagar o Registro: ' +#13+#13+
@@ -140,7 +137,7 @@ begin
 
   try
 
-    qry := TFDQuery.Create(nil);
+    qry := TZQuery.Create(nil);
     qry.Connection:= ConexaoDB;
 
     qry.SQL.Clear;
@@ -167,18 +164,20 @@ begin
 end;
 
 function TCategoria.Gravar: Boolean;
-var qry:TFDQuery;
+begin
+end;
+
+function TCategoria.Inserir: Boolean;
+var qry:TZQuery;
 begin
   try
-
-    qry:= TFDQuery.Create(nil);
-    qry.Connection:=ConexaoDB;
+    qry:= TZQuery.Create(nil);
+    qry.Connection:= ConexaoDB;
 
     qry.SQL.Clear;
-
     qry.SQL.Add('INSERT INTO categorias (descricao) values (:descricao)');
 
-    qry.ParamByName('descricao').AsString :=Self.Fdescricao;
+    qry.ParamByName('descricao').AsString     := Self.Fdescricao;
 
     try
       qry.ExecSQL;
@@ -188,24 +187,19 @@ begin
     end;
 
   finally
+
     if Assigned(qry) then begin
       FreeAndNil(qry);
     end;
 
   end;
-
-end;
-
-function TCategoria.Inserir: Boolean;
-begin
-
 end;
 
 function TCategoria.Selecionar(id: Integer): Boolean;
-var qry:TFDQuery;
+var qry:TZQuery;
 begin
   try
-    qry:= TFDQuery.Create(nil);
+    qry:= TZQuery.Create(nil);
     qry.Connection:=ConexaoDB;
 
     qry.SQL.Clear;
