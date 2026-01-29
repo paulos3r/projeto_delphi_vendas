@@ -6,8 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.ExtCtrls, Data.DB,
   Vcl.Buttons, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask,
-  uDTMConexao, uCategoria, uEnumEstadoCadastro, ZAbstractRODataset,
-  ZAbstractDataset, ZDataset;
+  uDTMConexao, ZAbstractRODataset,ZAbstractDataset, ZDataset,
+  uEnumEstadoCadastro, uCategoriaService, uCategoria;
 
 type
   TfrmCadCategorias = class(TForm)
@@ -39,8 +39,9 @@ type
     procedure btnNovoClick(Sender: TObject);
     procedure grdListagemDblClick(Sender: TObject);
   private
-    oCategoria:TCategoria;
     EstadoDoCadastro:TEstadoDoCadastro;
+    oService:TCategoriaService;
+    oCategoria:TCategoria;
 
     { Private declarations }
 
@@ -65,10 +66,14 @@ implementation
 {$REGION '___FUNCIONALIDADE DOS BOTOES___'}
 
 procedure TfrmCadCategorias.btnAlterarClick(Sender: TObject);
+var i:Integer; categoria:TCategoria;
 begin
-  if oCategoria.Selecionar(qryListagem.FieldByName('categoria_id').AsInteger) then begin
-    edtCategoriaId.Text:= IntToStr( oCategoria.categoria_id );
-    edtDescricao.Text:= oCategoria.descricao;
+
+  categoria :=oService.BuscarPorId(qryListagem.FieldByName('categoria_id').AsInteger);
+
+  if categoria<>nil then begin
+    edtCategoriaId.Text:= IntToStr( categoria.categoria_id  );
+    edtDescricao.Text:= categoria.descricao;
   end
   else begin
     btnCancelar.Click;
@@ -85,49 +90,45 @@ procedure TfrmCadCategorias.btnCancelarClick(Sender: TObject);
 begin
   tabListagem.TabVisible := true;
   pgcPrincipal.ActivePage := tabListagem;
-  ShowMessage('CANCELADO')
+  ShowMessage('CANCELADO');
+
+  LimparEdits;
 end;
 
 procedure TfrmCadCategorias.btnExcluirClick(Sender: TObject);
 begin
+  if tabListagem.TabVisible=true then begin
+    ShowMessage('Item não foi selecionado para tela de manutenção');
+    abort;
+  end;
 
-  oCategoria.categoria_id:= StrToInt( edtCategoriaId.Text) ;
-  oCategoria.Excluir;
+  oService.Excluir( StrToInt( edtCategoriaId.Text), edtDescricao.Text );
 
-  ShowMessage('DELETADO');
-
-  pgcPrincipal.ActivePage := tabListagem;
-
+  tabListagem.TabVisible:=true;
+  pgcPrincipal.ActivePage:=tabListagem;
   LimparEdits;
-
   qryListagem.Refresh;
+
 end;
 
 procedure TfrmCadCategorias.btnGravarClick(Sender: TObject);
 begin
 
-  //oCategoria.categoria_id:=100;
-
   if ( CamposDeCriterioObrigatorio ) then begin
     abort;
   end;
 
-  oCategoria.descricao:=edtDescricao.Text;
-
   if edtCategoriaId.Text <> EmptyStr then begin
-    oCategoria.Atualizar;
+    oService.Alterar( StrToInt( edtCategoriaId.Text), edtDescricao.Text );
   end
   else begin
-    oCategoria.Inserir;
+    oService.Salvar( edtDescricao.Text);
   end;
 
-  LimparEdits;
-
-  ShowMessage('GRAVADO');
 
   tabListagem.TabVisible := true;
   pgcPrincipal.ActivePage:=tabListagem;
-
+  LimparEdits;
   qryListagem.Refresh;
 
 end;
@@ -136,7 +137,6 @@ procedure TfrmCadCategorias.btnNovoClick(Sender: TObject);
 begin
   tabListagem.TabVisible := false;
   pgcPrincipal.ActivePage := tblManutencao;
-  ShowMessage('NOVO');
 end;
 
 {$ENDREGION}
@@ -171,7 +171,7 @@ begin
     dtsListagem.DataSet := qryListagem;
     grdListagem.DataSource := dtsListagem;
 
-    oCategoria:= TCategoria.Create(dtmConexao.conOracle);
+    oService:= TCategoriaService.Create(dtmConexao.conOracle);
 
   except on e:Exception do
 
@@ -189,7 +189,7 @@ begin
 
   pgcPrincipal.ActivePageIndex := 0;
 
-  if (qryListagem.SQL.Text<>EmptyStr) then begin
+  if ( not qryListagem.SQL.Text.IsEmpty) then begin
     qryListagem.Open;
     qryListagem.Active:=true;
   end;
@@ -251,8 +251,8 @@ end;
 function TfrmCadCategorias.Excluir: Boolean;
 begin
 
-  if oCategoria.Selecionar(qryListagem.FieldByName('categoria_id').AsInteger) then begin
-    Result := oCategoria.Excluir;
+  if oService.BuscarPorId(qryListagem.FieldByName('categoria_id').AsInteger)<>nil then begin
+    oService.Excluir( StrToInt(edtCategoriaId.Text) ,edtDescricao.Text);
   end;
 
 end;
@@ -269,12 +269,11 @@ begin
   oCategoria.descricao:=edtDescricao.Text;
 
   if (EstadoDoCadastro=ecInserir) then  begin
-    Result := oCategoria.Gravar;
+    oService.Salvar(edtDescricao.Text);
   end
   else if (EstadoDoCadastro=ecAlterar) then begin
-    Result:=oCategoria.Atualizar;
+    oService.Alterar( StrToInt(edtCategoriaId.Text) ,edtDescricao.Text)
   end;
-
 
 end;
 
