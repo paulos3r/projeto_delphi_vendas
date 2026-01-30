@@ -29,6 +29,7 @@ object frmPrincipal: TfrmPrincipal
         end
         object CONDIODEPAGAMENTO1: TMenuItem
           Caption = 'CONDI'#199#195'O DE PAGAMENTO'
+          OnClick = CONDIODEPAGAMENTO1Click
         end
       end
       object N1: TMenuItem

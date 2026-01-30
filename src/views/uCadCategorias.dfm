@@ -22,7 +22,7 @@ object frmCadCategorias: TfrmCadCategorias
     Top = 0
     Width = 811
     Height = 534
-    ActivePage = tblManutencao
+    ActivePage = tabListagem
     Align = alClient
     TabOrder = 0
     object tabListagem: TTabSheet

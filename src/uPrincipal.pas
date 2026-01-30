@@ -40,6 +40,7 @@ type
     procedure CATEGORIA1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure CONDIODEPAGAMENTO1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -53,13 +54,22 @@ implementation
 
 {$R *.dfm}
 
-uses uCadCategorias,uDTMConexao;
+uses uCadCategorias,uCadCondicaoPagamento, uDTMConexao;
 
 procedure TfrmPrincipal.CATEGORIA1Click(Sender: TObject);
 begin
   frmCadCategorias:=TfrmCadCategorias.Create(self);
   frmCadCategorias.ShowModal;
   frmCadCategorias.Release;
+end;
+
+procedure TfrmPrincipal.CONDIODEPAGAMENTO1Click(Sender: TObject);
+begin
+
+  frmCadCondicaoPagamento:=TfrmCadCondicaoPagamento.Create(Self);
+  frmCadCondicaoPagamento.ShowModal;
+  frmCadCondicaoPagamento.Release;
+
 end;
 
 procedure TfrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);

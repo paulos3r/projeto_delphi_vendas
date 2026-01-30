@@ -119,7 +119,7 @@ begin
     qry:= TZQuery.Create(nil);
     qry.Connection:= dbConexao;
 
-    qry.SQL.Clear;
+
     qry.SQL.Add('INSERT INTO categorias (descricao) values (:descricao)');
 
     qry.ParamByName('descricao').AsString     := ACategoria.descricao;

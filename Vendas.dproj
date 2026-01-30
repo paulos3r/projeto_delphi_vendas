@@ -142,6 +142,17 @@
         <DCCReference Include="src\domain\uEnumEstadoCadastro.pas"/>
         <DCCReference Include="src\infrastructure\repository\uCategoriaRepository.pas"/>
         <DCCReference Include="src\services\uCategoriaService.pas"/>
+        <DCCReference Include="src\views\uCadCondicaoPagamento.pas">
+            <Form>frmCadCondicaoPagamento</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="src\views\uPesCondicaoPagamento.pas">
+            <Form>frmPesCondicaoPagamento</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="src\infrastructure\repository\uCondicaoPagamentoRepository.pas"/>
+        <DCCReference Include="src\domain\uCondicaoPagamento.pas"/>
+        <DCCReference Include="src\services\uCondicaoPagamentoService.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
