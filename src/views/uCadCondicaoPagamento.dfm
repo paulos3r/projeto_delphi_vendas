@@ -10,6 +10,8 @@ object frmCadCondicaoPagamento: TfrmCadCondicaoPagamento
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
@@ -18,9 +20,7 @@ object frmCadCondicaoPagamento: TfrmCadCondicaoPagamento
     Height = 319
     Align = alLeft
     TabOrder = 0
-    ExplicitLeft = -6
-    ExplicitHeight = 509
-    object BitBtn1: TBitBtn
+    object btFechar: TBitBtn
       Left = 1
       Top = 293
       Width = 143
@@ -34,11 +34,9 @@ object frmCadCondicaoPagamento: TfrmCadCondicaoPagamento
       Font.Style = []
       ParentFont = False
       TabOrder = 0
-      ExplicitLeft = 104
-      ExplicitTop = 640
-      ExplicitWidth = 75
+      OnClick = btFecharClick
     end
-    object BitBtn2: TBitBtn
+    object btGravar: TBitBtn
       Left = 1
       Top = 1
       Width = 143
@@ -52,11 +50,9 @@ object frmCadCondicaoPagamento: TfrmCadCondicaoPagamento
       Font.Style = []
       ParentFont = False
       TabOrder = 1
-      ExplicitLeft = 72
-      ExplicitTop = 328
-      ExplicitWidth = 75
+      OnClick = btGravarClick
     end
-    object BitBtn3: TBitBtn
+    object btCancelar: TBitBtn
       Left = 1
       Top = 26
       Width = 143
@@ -70,11 +66,9 @@ object frmCadCondicaoPagamento: TfrmCadCondicaoPagamento
       Font.Style = []
       ParentFont = False
       TabOrder = 2
-      ExplicitLeft = 2
-      ExplicitTop = 32
-      ExplicitWidth = 198
+      OnClick = btCancelarClick
     end
-    object BitBtn4: TBitBtn
+    object btExcluir: TBitBtn
       Left = 1
       Top = 51
       Width = 143
@@ -88,11 +82,9 @@ object frmCadCondicaoPagamento: TfrmCadCondicaoPagamento
       Font.Style = []
       ParentFont = False
       TabOrder = 3
-      ExplicitLeft = 2
-      ExplicitTop = 63
-      ExplicitWidth = 199
+      OnClick = btExcluirClick
     end
-    object BitBtn5: TBitBtn
+    object btPesquisar: TBitBtn
       Left = 1
       Top = 160
       Width = 144
@@ -105,7 +97,7 @@ object frmCadCondicaoPagamento: TfrmCadCondicaoPagamento
       Font.Style = []
       ParentFont = False
       TabOrder = 4
-      OnClick = BitBtn5Click
+      OnClick = btPesquisarClick
     end
   end
   object Panel2: TPanel
@@ -116,7 +108,6 @@ object frmCadCondicaoPagamento: TfrmCadCondicaoPagamento
     Align = alClient
     ParentBackground = False
     TabOrder = 1
-    ExplicitLeft = 150
     object Label1: TLabel
       Left = 6
       Top = 22
@@ -158,11 +149,12 @@ object frmCadCondicaoPagamento: TfrmCadCondicaoPagamento
       Font.Style = []
       ParentFont = False
     end
-    object Edit1: TEdit
+    object edCodigo: TEdit
       Left = 6
       Top = 43
       Width = 121
       Height = 23
+      Enabled = False
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -12
@@ -171,7 +163,7 @@ object frmCadCondicaoPagamento: TfrmCadCondicaoPagamento
       ParentFont = False
       TabOrder = 0
     end
-    object Edit2: TEdit
+    object edNome: TEdit
       Left = 144
       Top = 43
       Width = 353
@@ -184,7 +176,7 @@ object frmCadCondicaoPagamento: TfrmCadCondicaoPagamento
       ParentFont = False
       TabOrder = 1
     end
-    object ComboBox1: TComboBox
+    object cbTipoPagamento: TComboBox
       Left = 6
       Top = 117
       Width = 121
@@ -213,7 +205,7 @@ object frmCadCondicaoPagamento: TfrmCadCondicaoPagamento
       Font.Style = []
       ParentFont = False
       TabOrder = 3
-      object CheckBox1: TCheckBox
+      object cbDuplicata: TCheckBox
         Left = 16
         Top = 24
         Width = 97
@@ -221,7 +213,7 @@ object frmCadCondicaoPagamento: TfrmCadCondicaoPagamento
         Caption = 'Duplicata'
         TabOrder = 0
       end
-      object CheckBox2: TCheckBox
+      object cbBoleto: TCheckBox
         Left = 16
         Top = 56
         Width = 97
@@ -229,7 +221,7 @@ object frmCadCondicaoPagamento: TfrmCadCondicaoPagamento
         Caption = 'Boleto'
         TabOrder = 1
       end
-      object CheckBox3: TCheckBox
+      object cbCheque: TCheckBox
         Left = 16
         Top = 88
         Width = 97
@@ -237,7 +229,7 @@ object frmCadCondicaoPagamento: TfrmCadCondicaoPagamento
         Caption = 'Cheque'
         TabOrder = 2
       end
-      object CheckBox4: TCheckBox
+      object cbCartao: TCheckBox
         Left = 200
         Top = 24
         Width = 97
@@ -245,7 +237,7 @@ object frmCadCondicaoPagamento: TfrmCadCondicaoPagamento
         Caption = 'Cart'#227'o'
         TabOrder = 3
       end
-      object CheckBox5: TCheckBox
+      object cbDinheiro: TCheckBox
         Left = 200
         Top = 56
         Width = 97
@@ -253,7 +245,7 @@ object frmCadCondicaoPagamento: TfrmCadCondicaoPagamento
         Caption = 'Dinheiro'
         TabOrder = 4
       end
-      object CheckBox6: TCheckBox
+      object cbAcumulativo: TCheckBox
         Left = 200
         Top = 88
         Width = 97

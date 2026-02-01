@@ -10,6 +10,9 @@ object frmPesCondicaoPagamento: TfrmPesCondicaoPagamento
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
@@ -18,10 +21,6 @@ object frmPesCondicaoPagamento: TfrmPesCondicaoPagamento
     Height = 419
     Align = alClient
     TabOrder = 0
-    ExplicitLeft = 1
-    ExplicitTop = -5
-    ExplicitWidth = 772
-    ExplicitHeight = 312
     object Label1: TLabel
       Left = 8
       Top = 16
@@ -36,7 +35,7 @@ object frmPesCondicaoPagamento: TfrmPesCondicaoPagamento
       Height = 15
       Caption = 'Pesquisa'
     end
-    object ComboBox1: TComboBox
+    object cbPesCondicaoPagamentoFiltros: TComboBox
       Left = 8
       Top = 37
       Width = 145
@@ -46,14 +45,15 @@ object frmPesCondicaoPagamento: TfrmPesCondicaoPagamento
         'Nome'
         'C'#243'digo')
     end
-    object Edit1: TEdit
+    object edPesCondicaoPagamentoPesquisa: TEdit
       Left = 184
       Top = 37
       Width = 425
       Height = 23
       TabOrder = 1
+      OnKeyDown = edPesCondicaoPagamentoPesquisaKeyDown
     end
-    object DBGrid1: TDBGrid
+    object dgPesCondicaoPagamento: TDBGrid
       Left = 8
       Top = 80
       Width = 601
@@ -64,6 +64,7 @@ object frmPesCondicaoPagamento: TfrmPesCondicaoPagamento
       TitleFont.Height = -12
       TitleFont.Name = 'Segoe UI'
       TitleFont.Style = []
+      OnDblClick = dgPesCondicaoPagamentoDblClick
     end
   end
   object Panel2: TPanel
@@ -73,8 +74,6 @@ object frmPesCondicaoPagamento: TfrmPesCondicaoPagamento
     Height = 29
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 312
-    ExplicitWidth = 772
     object Button1: TButton
       Left = 1
       Top = 1
@@ -92,7 +91,11 @@ object frmPesCondicaoPagamento: TfrmPesCondicaoPagamento
       Align = alRight
       Caption = '&Cancelar'
       TabOrder = 1
-      ExplicitLeft = 672
+      OnClick = Button2Click
     end
+  end
+  object dsPesCondicaoPagamento: TDataSource
+    Left = 496
+    Top = 104
   end
 end

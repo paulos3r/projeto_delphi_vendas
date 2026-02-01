@@ -153,6 +153,12 @@
         <DCCReference Include="src\infrastructure\repository\uCondicaoPagamentoRepository.pas"/>
         <DCCReference Include="src\domain\uCondicaoPagamento.pas"/>
         <DCCReference Include="src\services\uCondicaoPagamentoService.pas"/>
+        <DCCReference Include="src\domain\uCliente.pas"/>
+        <DCCReference Include="src\infrastructure\repository\uClienteRepository.pas"/>
+        <DCCReference Include="src\views\uCadCliente.pas">
+            <Form>frmCadCliente</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

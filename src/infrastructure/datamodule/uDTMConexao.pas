@@ -3,11 +3,7 @@
 interface
 
 uses
-  System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,
-  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
-  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.VCLUI.Wait,
-  Data.DB, ZAbstractConnection,
-  ZConnection;
+  System.SysUtils, System.Classes, Data.DB, ZAbstractConnection, ZConnection;
 
 type
   TdtmConexao = class(TDataModule)
@@ -16,6 +12,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    procedure Conectar;
   end;
 
 var
@@ -26,5 +23,14 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 {$R *.dfm}
+
+{ TdtmConexao }
+
+procedure TdtmConexao.Conectar;
+begin
+  if not conOracle.Connected then begin
+    conOracle.Connected:=true;
+  end;
+end;
 
 end.

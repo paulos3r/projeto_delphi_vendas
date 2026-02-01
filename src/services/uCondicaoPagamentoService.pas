@@ -10,18 +10,18 @@ type
     private
       FRepository:TCondicaoPagamentoRepository;
 
-      procedure Validar(ACondicaoPagamento:TCondicaoPagamento);
+      procedure Validar( ADescricao, ATipo_pagamento, AForma_pagamento:String );
 
     public
-      constructor Create(ARepository:TCondicaoPagamentoRepository);
+      constructor Create(AConn: TZConnection);
       destructor Destroy; override;
 
-      procedure Gravar(ACondicaoPagamento:TCondicaoPagamento);
-      procedure Alterar(ACondicaoPagamento:TCondicaoPagamento);
-      procedure Excluir(AId:Integer);
+      procedure Gravar(ADescricao,ATipo_pagamento, AForma_pagamento:String );
+      procedure Alterar(const CId:Integer; ADescricao,ATipo_pagamento, AForma_pagamento:String );
+      procedure Excluir(const CId:Integer);
 
-      function PesquisarPorId(AId:Integer): TCondicaoPagamento;
-      function PesquisarPorNome(const ANome:String): TCondicaoPagamento;
+      function PesquisarPorId(const CId:Integer): TDataSet;
+      function PesquisarPorNome(const ADescricao:String): TDataSet;
 
       function Listar:TDataSet;
 
@@ -31,61 +31,96 @@ implementation
 
 { TCondicaoPagamentoService }
 
-procedure TCondicaoPagamentoService.Alterar(
-  ACondicaoPagamento: TCondicaoPagamento);
-begin
 
-end;
-
-constructor TCondicaoPagamentoService.Create(
-  ARepository: TCondicaoPagamentoRepository);
+constructor TCondicaoPagamentoService.Create(AConn:TZConnection);
 begin
  inherited Create;
- FRepository:= ARepository;
+
+ FRepository := TCondicaoPagamentoRepository.Create(AConn);
+
 end;
 
 destructor TCondicaoPagamentoService.Destroy;
 begin
-  FRepository.Free;
+  FreeAndNil(FRepository);
   inherited;
 end;
 
-procedure TCondicaoPagamentoService.Excluir(AId: Integer);
+procedure TCondicaoPagamentoService.Alterar(const CId:Integer; ADescricao,ATipo_pagamento, AForma_pagamento:String);
+var condicao:TCondicaoPagamento;
 begin
+  Validar(ADescricao, ATipo_pagamento, AForma_pagamento);
 
+  condicao := TCondicaoPagamento.Create;
+  try
+  condicao.DefinirId(CId);
+  condicao.descricao:=ADescricao;
+  condicao.tipoPagamento:=ATipo_pagamento;
+  condicao.formaPagamento:=AForma_pagamento;
+
+  FRepository.Alterar(condicao);
+  finally
+    condicao.Free;
+  end;
 end;
 
-procedure TCondicaoPagamentoService.Gravar(
-  ACondicaoPagamento: TCondicaoPagamento);
+procedure TCondicaoPagamentoService.Excluir(const CId:Integer);
 begin
-  Validar(ACondicaoPagamento);
-  FRepository.Gravar(ACondicaoPagamento);
+  FRepository.Excluir(CId);
+end;
+
+procedure TCondicaoPagamentoService.Gravar(ADescricao,ATipo_pagamento, AForma_pagamento:String);
+var condicao:TCondicaoPagamento;
+begin
+
+  Validar(ADescricao, ATipo_pagamento, AForma_pagamento);
+
+  condicao := TCondicaoPagamento.Create;
+  try
+
+    condicao.descricao := ADescricao;
+    condicao.tipoPagamento := ATipo_pagamento;
+    condicao.formaPagamento := AForma_pagamento;
+
+    FRepository.Gravar(condicao);
+
+  finally
+    condicao.Free;
+  end;
 end;
 
 function TCondicaoPagamentoService.Listar: TDataSet;
 begin
-
+  Result := FRepository.Listar;
 end;
 
-function TCondicaoPagamentoService.PesquisarPorId(
-  AId: Integer): TCondicaoPagamento;
+function TCondicaoPagamentoService.PesquisarPorId(const CId:Integer): TDataSet;
 begin
-
+  Result := FRepository.PesquisarPorId(CId);
 end;
 
-function TCondicaoPagamentoService.PesquisarPorNome(
-  const ANome: String): TCondicaoPagamento;
+function TCondicaoPagamentoService.PesquisarPorNome( const ADescricao: String ): TDataSet;
 begin
-
+  Result := FRepository.PesquisarPorNome(ADescricao);
 end;
 
-procedure TCondicaoPagamentoService.Validar(
-  ACondicaoPagamento: TCondicaoPagamento);
+procedure TCondicaoPagamentoService.Validar(ADescricao, ATipo_pagamento, AForma_pagamento:String);
+var CA_PRASO, CA_VISTA:string;
 begin
-  if Trim(ACondicaoPagamento.nome)='' then begin
-    raise Exception.Create('O nome da condição de pagamento é obrigatória');
+  CA_VISTA:='0';
+  CA_PRASO:='1';
+
+  if Trim(ADescricao)='' then begin
+    raise Exception.Create('A descricao da condição de pagamento é obrigatória');
   end;
 
+  if not (ATipo_pagamento <> CA_VISTA) and not (ATipo_pagamento <> CA_PRASO) then begin
+    raise Exception.Create('O nome da tipo de pagamento é obrigatória');
+  end;
+
+  if Trim(AForma_pagamento)='' then begin
+    raise Exception.Create('O nome da condição de pagamento é obrigatória');
+  end;
 
 end;
 

@@ -23,6 +23,7 @@ object frmPrincipal: TfrmPrincipal
         Caption = 'CADASTROS'
         object CLIENTE3: TMenuItem
           Caption = 'CLIENTE'
+          OnClick = CLIENTE3Click
         end
         object N6: TMenuItem
           Caption = '-'

@@ -13,15 +13,21 @@ uses
   uPesCondicaoPagamento in 'src\views\uPesCondicaoPagamento.pas' {frmPesCondicaoPagamento},
   uCondicaoPagamentoRepository in 'src\infrastructure\repository\uCondicaoPagamentoRepository.pas',
   uCondicaoPagamento in 'src\domain\uCondicaoPagamento.pas',
-  uCondicaoPagamentoService in 'src\services\uCondicaoPagamentoService.pas';
+  uCondicaoPagamentoService in 'src\services\uCondicaoPagamentoService.pas',
+  uCliente in 'src\domain\uCliente.pas',
+  uClienteRepository in 'src\infrastructure\repository\uClienteRepository.pas',
+  uCadCliente in 'src\views\uCadCliente.pas' {frmCadCliente};
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
+
+  Application.CreateForm(TdtmConexao, dtmConexao);
+  dtmConexao.Conectar;
+
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
-  Application.CreateForm(TfrmCadCondicaoPagamento, frmCadCondicaoPagamento);
-  Application.CreateForm(TfrmPesCondicaoPagamento, frmPesCondicaoPagamento);
+
   Application.Run;
 end.

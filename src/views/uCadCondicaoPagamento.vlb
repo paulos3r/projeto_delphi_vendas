@@ -1,40 +1,40 @@
 ﻿[Panel2]
 Coordinates=76,144,55,58
 
-[ComboBox1]
-Coordinates=10,10,101,124
-
 [Panel1]
 Coordinates=175,10,55,58
-
-[BitBtn4]
-Coordinates=240,10,56,58
 
 [Label1]
 Coordinates=10,212,53,58
 
-[Edit1]
-Coordinates=121,10,44,58
-
-[BitBtn2]
-Coordinates=10,144,56,58
-
-[BitBtn1]
-Coordinates=324,144,56,58
-
-[BitBtn3]
-Coordinates=306,10,56,58
-
 [Label2]
 Coordinates=141,144,53,58
-
-[BitBtn5]
-Coordinates=258,144,56,58
-
-[Edit2]
-Coordinates=204,144,44,58
 
 []
 Coordinates=73,212,100,36
 Visible=True
+
+[btGravar]
+Coordinates=10,144,56,58
+
+[btCancelar]
+Coordinates=306,10,56,58
+
+[btExcluir]
+Coordinates=240,10,56,58
+
+[btPesquisar]
+Coordinates=258,144,56,58
+
+[btFechar]
+Coordinates=324,144,56,58
+
+[edCodigo]
+Coordinates=121,10,44,58
+
+[edNome]
+Coordinates=204,144,44,58
+
+[cbTipoPagamento]
+Coordinates=10,10,101,124
 

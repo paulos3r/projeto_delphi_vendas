@@ -88,15 +88,22 @@ end;
 
 procedure TfrmCadCategorias.btnCancelarClick(Sender: TObject);
 begin
+
+  if tabListagem.TabVisible=true then begin
+    abort;
+  end;
+
   tabListagem.TabVisible := true;
   pgcPrincipal.ActivePage := tabListagem;
   ShowMessage('CANCELADO');
 
   LimparEdits;
+
 end;
 
 procedure TfrmCadCategorias.btnExcluirClick(Sender: TObject);
 begin
+
   if tabListagem.TabVisible=true then begin
     ShowMessage('Item não foi selecionado para tela de manutenção');
     abort;

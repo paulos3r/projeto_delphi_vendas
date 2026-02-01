@@ -55,7 +55,6 @@ begin
     qry:= TZQuery.Create(nil);
     qry.Connection:= dbConexao;
 
-    qry.SQL.Clear;
     qry.SQL.Add(
     ' UPDATE categorias ' +
     ' SET descricao= :descricao ' +
