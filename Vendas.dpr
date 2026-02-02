@@ -16,7 +16,8 @@ uses
   uCondicaoPagamentoService in 'src\services\uCondicaoPagamentoService.pas',
   uCliente in 'src\domain\uCliente.pas',
   uClienteRepository in 'src\infrastructure\repository\uClienteRepository.pas',
-  uCadCliente in 'src\views\uCadCliente.pas' {frmCadCliente};
+  uCadCliente in 'src\views\uCadCliente.pas' {frmCadCliente},
+  uClienteService in 'src\services\uClienteService.pas';
 
 {$R *.res}
 

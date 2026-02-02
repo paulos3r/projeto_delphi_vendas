@@ -10,6 +10,7 @@ object frmCadCliente: TfrmCadCliente
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnCreate = FormCreate
   TextHeight = 15
   object pnlGrupoBotao: TPanel
     Left = 0
@@ -18,58 +19,51 @@ object frmCadCliente: TfrmCadCliente
     Height = 582
     Align = alLeft
     TabOrder = 0
-    object BitBtn1: TBitBtn
-      Left = 24
-      Top = 24
-      Width = 75
-      Height = 25
-      Caption = 'BitBtn1'
-      TabOrder = 0
-    end
-    object BitBtn2: TBitBtn
+    object btnPesquisar: TBitBtn
       Left = 2
       Top = 259
       Width = 127
       Height = 25
       Align = alCustom
       Caption = 'Pesquisar'
-      TabOrder = 1
+      TabOrder = 0
     end
-    object BitBtn3: TBitBtn
+    object btnFechar: TBitBtn
       Left = 1
       Top = 556
       Width = 127
       Height = 25
       Align = alBottom
       Caption = '&Fechar'
-      TabOrder = 2
+      TabOrder = 1
     end
-    object BitBtn4: TBitBtn
+    object btnGravar: TBitBtn
       Left = 1
       Top = 1
       Width = 127
       Height = 25
       Align = alTop
       Caption = 'Gravar'
-      TabOrder = 3
+      TabOrder = 2
+      OnClick = btnGravarClick
     end
-    object BitBtn5: TBitBtn
+    object btnExcluir: TBitBtn
       Left = 1
       Top = 51
       Width = 127
       Height = 25
       Align = alTop
       Caption = 'Excluir'
-      TabOrder = 4
+      TabOrder = 3
     end
-    object BitBtn6: TBitBtn
+    object btnCancelar: TBitBtn
       Left = 1
       Top = 26
       Width = 127
       Height = 25
       Align = alTop
       Caption = 'Cancelar'
-      TabOrder = 5
+      TabOrder = 4
     end
   end
   object Panel1: TPanel
@@ -86,6 +80,20 @@ object frmCadCliente: TfrmCadCliente
       Height = 112
       Align = alTop
       TabOrder = 0
+      object Label1: TLabel
+        Left = 230
+        Top = 60
+        Width = 108
+        Height = 15
+        Caption = 'Data De Nascimento'
+      end
+      object Label2: TLabel
+        Left = 18
+        Top = 60
+        Width = 21
+        Height = 15
+        Caption = 'CPF'
+      end
       object edCodigo: TLabeledEdit
         Left = 13
         Top = 24
@@ -108,35 +116,13 @@ object frmCadCliente: TfrmCadCliente
         TabOrder = 1
         Text = ''
       end
-      object LabeledEdit1: TLabeledEdit
-        Left = 220
-        Top = 80
-        Width = 153
-        Height = 23
-        EditLabel.Width = 107
-        EditLabel.Height = 15
-        EditLabel.Caption = 'Data de Nascimento'
-        TabOrder = 2
-        Text = ''
-      end
-      object LabeledEdit2: TLabeledEdit
-        Left = 13
-        Top = 80
-        Width = 156
-        Height = 23
-        EditLabel.Width = 24
-        EditLabel.Height = 15
-        EditLabel.Caption = 'CGC'
-        TabOrder = 3
-        Text = ''
-      end
-      object RadioGroup1: TRadioGroup
+      object rgStatus: TRadioGroup
         Left = 528
         Top = 25
         Width = 145
         Height = 81
         Caption = 'Status'
-        TabOrder = 4
+        TabOrder = 2
       end
       object rbAtivo: TRadioButton
         Left = 568
@@ -145,7 +131,7 @@ object frmCadCliente: TfrmCadCliente
         Height = 21
         Caption = 'ATIVO'
         Checked = True
-        TabOrder = 5
+        TabOrder = 3
         TabStop = True
       end
       object rbInativo: TRadioButton
@@ -154,7 +140,26 @@ object frmCadCliente: TfrmCadCliente
         Width = 65
         Height = 17
         Caption = 'INATIVO'
+        TabOrder = 4
+      end
+      object dtpDataNascimento: TDateTimePicker
+        Left = 225
+        Top = 80
+        Width = 186
+        Height = 23
+        Date = 46054.000000000000000000
+        Time = 0.857674004626460400
+        TabOrder = 5
+      end
+      object medCpfCnpj: TMaskEdit
+        Left = 13
+        Top = 80
+        Width = 120
+        Height = 23
+        EditMask = '999.999.999-99;1;_'
+        MaxLength = 14
         TabOrder = 6
+        Text = '   .   .   -  '
       end
     end
     object pgDadosPrincipais: TPageControl
@@ -167,7 +172,7 @@ object frmCadCliente: TfrmCadCliente
       TabOrder = 1
       object pgPrincipal: TTabSheet
         Caption = 'Principal'
-        object GroupBox1: TGroupBox
+        object gbDadosDoCrediario: TGroupBox
           Left = 9
           Top = 3
           Width = 664
@@ -197,14 +202,14 @@ object frmCadCliente: TfrmCadCliente
             Text = ''
           end
         end
-        object GroupBox2: TGroupBox
+        object gbDadosDeContato: TGroupBox
           Left = 9
           Top = 128
           Width = 662
           Height = 137
           Caption = '    Dados de Contatos   '
           TabOrder = 1
-          object LabeledEdit10: TLabeledEdit
+          object edEmail: TLabeledEdit
             Left = 22
             Top = 50
             Width = 358
@@ -215,7 +220,7 @@ object frmCadCliente: TfrmCadCliente
             TabOrder = 0
             Text = ''
           end
-          object LabeledEdit3: TLabeledEdit
+          object edTelefone: TLabeledEdit
             Left = 408
             Top = 50
             Width = 233
@@ -231,7 +236,7 @@ object frmCadCliente: TfrmCadCliente
       object pgEndereco: TTabSheet
         Caption = 'Endere'#231'o'
         ImageIndex = 1
-        object LabeledEdit4: TLabeledEdit
+        object edEndereco: TLabeledEdit
           Left = 3
           Top = 40
           Width = 382
@@ -242,7 +247,7 @@ object frmCadCliente: TfrmCadCliente
           TabOrder = 0
           Text = ''
         end
-        object LabeledEdit5: TLabeledEdit
+        object edBairro: TLabeledEdit
           Left = 409
           Top = 40
           Width = 216
@@ -253,7 +258,7 @@ object frmCadCliente: TfrmCadCliente
           TabOrder = 1
           Text = ''
         end
-        object LabeledEdit6: TLabeledEdit
+        object edCidade: TLabeledEdit
           Left = 3
           Top = 96
           Width = 216
@@ -264,7 +269,7 @@ object frmCadCliente: TfrmCadCliente
           TabOrder = 2
           Text = ''
         end
-        object LabeledEdit7: TLabeledEdit
+        object edEstado: TLabeledEdit
           Left = 256
           Top = 96
           Width = 113
@@ -275,7 +280,7 @@ object frmCadCliente: TfrmCadCliente
           TabOrder = 3
           Text = ''
         end
-        object LabeledEdit8: TLabeledEdit
+        object edCep: TLabeledEdit
           Left = 409
           Top = 96
           Width = 216

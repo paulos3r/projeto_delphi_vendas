@@ -2,7 +2,7 @@ unit uCondicaoPagamentoService;
 
 interface
 
-uses System.SysUtils, uCondicaoPagamento, uCondicaoPagamentoRepository, ZConnection, ZDataset, Data.DB;
+uses System.SysUtils, uCondicaoPagamento, uCondicaoPagamentoRepository, ZConnection, Data.DB;
 
 type
   TCondicaoPagamentoService=class
