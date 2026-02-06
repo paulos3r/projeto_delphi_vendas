@@ -177,16 +177,6 @@ begin
 
     Result.Open;
 
-      {if not qry.Eof then begin
-        Result := TCondicaoPagamento.Create;
-
-        Result.DefinirId( qry.FieldByName('condicao_id').AsInteger );
-        Result.descricao := qry.FieldByName('descricao').AsString;
-        Result.tipoPagamento := qry.FieldByName('tipo_pagamento').AsString;
-        Result.formaPagamento := qry.FieldByName('forma_pagamento').AsString;
-
-      end; }
-
   except on E:Exception do
     begin
       Result.free;

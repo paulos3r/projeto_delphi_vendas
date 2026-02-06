@@ -166,21 +166,29 @@ end;
 procedure TfrmCadCondicaoPagamento.LimparEdits;
 var i: Integer;
 begin
-  for i := 0 to ComponentCount -1  do begin
+  for i := 0 to ComponentCount -1  do
+  begin
     if Components[i] is TLabeledEdit then
-      TLabeledEdit(Components[i]).Text := EmptyStr
-    else if Components[i] is TEdit then
+    begin
+      TLabeledEdit(Components[i]).Text := EmptyStr end
+    else if Components[i] is TEdit then begin
       TEdit(Components[i]).Text := EmptyStr;
+    end
+    else if Components[i] is TCheckBox then begin
+      TCheckBox(Components[i]).Checked:=false;
+    end;
   end;
 
   cbTipoPagamento.ItemIndex:=-1;
 
+  {
   cbDinheiro.Checked:=false;
   cbDuplicata.Checked:=false;
   cbBoleto.Checked:=false;
   cbCheque.Checked:=false;
   cbCartao.Checked:=false;
   cbAcumulativo.Checked:=false;
+  }
 end;
 
 end.

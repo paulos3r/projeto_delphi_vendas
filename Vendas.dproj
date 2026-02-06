@@ -160,6 +160,10 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="src\services\uClienteService.pas"/>
+        <DCCReference Include="src\views\uPesCliente.pas">
+            <Form>frmPesCliente</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

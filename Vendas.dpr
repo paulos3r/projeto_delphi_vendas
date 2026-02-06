@@ -17,7 +17,8 @@ uses
   uCliente in 'src\domain\uCliente.pas',
   uClienteRepository in 'src\infrastructure\repository\uClienteRepository.pas',
   uCadCliente in 'src\views\uCadCliente.pas' {frmCadCliente},
-  uClienteService in 'src\services\uClienteService.pas';
+  uClienteService in 'src\services\uClienteService.pas',
+  uPesCliente in 'src\views\uPesCliente.pas' {frmPesCliente};
 
 {$R *.res}
 

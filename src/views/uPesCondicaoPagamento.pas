@@ -66,7 +66,9 @@ end;
 
 {$ENDREGION}
 
+
 {$REGION '___FUNCIONALIDADES___'}
+
 procedure TfrmPesCondicaoPagamento.FormShow(Sender: TObject);
 begin
   dsPesCondicaoPagamento.DataSet:=FService.Listar;
@@ -134,6 +136,5 @@ begin
 end;
 
 {$ENDREGION}
-
 
 end.

@@ -36,9 +36,13 @@ type
       );
       procedure Excluir(const CId:Integer);
 
-      function PesquisarPorId(const CId:Integer): TDataSet;
+      function PesquisarPorId(const CId:Integer): TCliente;
       function PesquisarPorCpfCnpj(const ACpfCnpj:String): TDataSet;
       function PesquisarPorNome(const ANome:String): TDataSet;
+
+            // usa na tela de busca de cadastro
+      function BuscarPorId(AId:Integer)  : TDataSet;
+      function BuscarPorNome(ANome:String): TDataSet;
 
       function Listar:TDataSet;
   end;
@@ -46,7 +50,8 @@ implementation
 
 { TCliente }
 
-{$REGION 'MyRegion'}
+{$REGION '___ CREATE E DESTROY ____'}
+
 constructor TClienteService.Create(AConn: TZConnection);
 begin
   FRepository := TClienteRepository.Create(AConn);
@@ -57,6 +62,7 @@ begin
   FreeAndNil(FRepository);
   inherited;
 end;
+
 {$ENDREGION}
 
 
@@ -94,7 +100,7 @@ end;
 
 procedure TClienteService.Excluir(const CId: Integer);
 begin
-
+  FRepository.Excluir(Cid);
 end;
 
 procedure TClienteService.Gravar(ANome, AStatus, ACpf_cnpj, ATelefone, AEmail,
@@ -131,22 +137,37 @@ end;
 
 function TClienteService.Listar: TDataSet;
 begin
-
+  Result:=FRepository.Listar;
 end;
 
 function TClienteService.PesquisarPorCpfCnpj(const ACpfCnpj: String): TDataSet;
 begin
-
+  Result:=FRepository.PesquisarPorCpfCnpj(ACpfCnpj);
 end;
 
-function TClienteService.PesquisarPorId(const CId: Integer): TDataSet;
+function TClienteService.PesquisarPorId( const CId: Integer ): TCliente;
 begin
+
+  Result:=FRepository.PesquisarPorId(Cid);
+
+  if not Assigned(Result) then
+    raise Exception.Create('Cliente não foi encontrado');
 
 end;
 
 function TClienteService.PesquisarPorNome(const ANome: String): TDataSet;
 begin
+  Result:=FRepository.PesquisarPorNome(ANome);
+end;
 
+function TClienteService.BuscarPorId(AId: Integer): TDataSet;
+begin
+  Result:=FRepository.BuscarPorId(AId);
+end;
+
+function TClienteService.BuscarPorNome(ANome: String): TDataSet;
+begin
+  Result:=FRepository.BuscarPorNome(ANome);
 end;
 
 procedure TClienteService.Validar(ANome, AStatus, ACpf_cnpj:string; ALimite: Double; ACondicao_id: Integer);

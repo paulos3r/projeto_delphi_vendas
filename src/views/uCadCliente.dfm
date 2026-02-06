@@ -27,6 +27,7 @@ object frmCadCliente: TfrmCadCliente
       Align = alCustom
       Caption = 'Pesquisar'
       TabOrder = 0
+      OnClick = btnPesquisarClick
     end
     object btnFechar: TBitBtn
       Left = 1
@@ -36,6 +37,7 @@ object frmCadCliente: TfrmCadCliente
       Align = alBottom
       Caption = '&Fechar'
       TabOrder = 1
+      OnClick = btnFecharClick
     end
     object btnGravar: TBitBtn
       Left = 1
@@ -55,6 +57,7 @@ object frmCadCliente: TfrmCadCliente
       Align = alTop
       Caption = 'Excluir'
       TabOrder = 3
+      OnClick = btnExcluirClick
     end
     object btnCancelar: TBitBtn
       Left = 1
@@ -64,6 +67,7 @@ object frmCadCliente: TfrmCadCliente
       Align = alTop
       Caption = 'Cancelar'
       TabOrder = 4
+      OnClick = btnCancelarClick
     end
   end
   object Panel1: TPanel
@@ -167,7 +171,7 @@ object frmCadCliente: TfrmCadCliente
       Top = 113
       Width = 695
       Height = 468
-      ActivePage = pgPrincipal
+      ActivePage = pgEndereco
       Align = alClient
       TabOrder = 1
       object pgPrincipal: TTabSheet
@@ -180,7 +184,7 @@ object frmCadCliente: TfrmCadCliente
           Caption = '   Dados do Credi'#225'rio    '
           TabOrder = 0
           object edLimite: TLabeledEdit
-            Left = 245
+            Left = 285
             Top = 48
             Width = 161
             Height = 23
@@ -198,13 +202,25 @@ object frmCadCliente: TfrmCadCliente
             EditLabel.Width = 114
             EditLabel.Height = 15
             EditLabel.Caption = 'Forma de Pagamento'
+            Enabled = False
             TabOrder = 1
             Text = ''
           end
+          object Panel3: TPanel
+            Left = 152
+            Top = 48
+            Width = 32
+            Height = 23
+            Caption = '+'
+            Color = clHighlight
+            ParentBackground = False
+            TabOrder = 2
+            OnClick = Panel3Click
+          end
         end
         object gbDadosDeContato: TGroupBox
-          Left = 9
-          Top = 128
+          Left = 3
+          Top = 120
           Width = 662
           Height = 137
           Caption = '    Dados de Contatos   '
