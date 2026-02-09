@@ -158,12 +158,12 @@ object frmCadCliente: TfrmCadCliente
       object medCpfCnpj: TMaskEdit
         Left = 13
         Top = 80
-        Width = 120
+        Width = 118
         Height = 23
-        EditMask = '999.999.999-99;1;_'
+        EditMask = '999.999.999-99;0;_'
         MaxLength = 14
         TabOrder = 6
-        Text = '   .   .   -  '
+        Text = ''
       end
     end
     object pgDadosPrincipais: TPageControl
@@ -171,9 +171,10 @@ object frmCadCliente: TfrmCadCliente
       Top = 113
       Width = 695
       Height = 468
-      ActivePage = pgEndereco
+      ActivePage = pgPrincipal
       Align = alClient
       TabOrder = 1
+      ExplicitLeft = 5
       object pgPrincipal: TTabSheet
         Caption = 'Principal'
         object gbDadosDoCrediario: TGroupBox

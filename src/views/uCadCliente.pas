@@ -146,7 +146,7 @@ begin
   try
     idCliente:= frmPesCliete.id;
   finally
-    frmCadCliente.Release;
+    frmPesCliete.Release;
   end;
   // pego o id e consulto todos os dados para peencher a tela
   cliente := TCliente.Create;
@@ -158,6 +158,7 @@ begin
   dtpDataNascimento.Date := cliente.data_nascimento;
   rbAtivo.Enabled:= cliente.status='ATIVO';
 
+  medCpfCnpj.Clear;
   medCpfCnpj.text := cliente.cpf_cnpj;
 
   edLimite.Text := FloatToStr( cliente.limite ) ;

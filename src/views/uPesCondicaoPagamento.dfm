@@ -74,7 +74,7 @@ object frmPesCondicaoPagamento: TfrmPesCondicaoPagamento
     Height = 29
     Align = alBottom
     TabOrder = 1
-    object Button1: TButton
+    object btOk: TButton
       Left = 1
       Top = 1
       Width = 104
@@ -83,7 +83,7 @@ object frmPesCondicaoPagamento: TfrmPesCondicaoPagamento
       Caption = '&Ok'
       TabOrder = 0
     end
-    object Button2: TButton
+    object btCancelar: TButton
       Left = 518
       Top = 1
       Width = 99
@@ -91,7 +91,7 @@ object frmPesCondicaoPagamento: TfrmPesCondicaoPagamento
       Align = alRight
       Caption = '&Cancelar'
       TabOrder = 1
-      OnClick = Button2Click
+      OnClick = btCancelarClick
     end
   end
   object dsPesCondicaoPagamento: TDataSource

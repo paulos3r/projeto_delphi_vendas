@@ -39,16 +39,6 @@ implementation
 
 {$R *.dfm}
 
-procedure TfrmPesCliente.btCancelarClick(Sender: TObject);
-begin
-  Close;
-end;
-
-procedure TfrmPesCliente.dgPesClienteDblClick(Sender: TObject);
-begin
-  SelecionarRegistro;
-end;
-
 procedure TfrmPesCliente.FormCreate(Sender: TObject);
 begin
   FService :=  TClienteService.Create(dtmConexao.conOracle);
@@ -57,6 +47,16 @@ end;
 procedure TfrmPesCliente.FormDestroy(Sender: TObject);
 begin
   FreeAndNil(FService);
+end;
+
+procedure TfrmPesCliente.btCancelarClick(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TfrmPesCliente.dgPesClienteDblClick(Sender: TObject);
+begin
+  SelecionarRegistro;
 end;
 
 procedure TfrmPesCliente.FormShow(Sender: TObject);
@@ -70,9 +70,7 @@ begin
   if not Assigned(dsPesCliente.DataSet) then exit;
   if dsPesCliente.DataSet.IsEmpty then exit;
 
-    // preciso passar esse resultado para tela de cadastro
   id:=dsPesCliente.DataSet.FieldByName('CLIENTE_ID').AsInteger;
-
   ModalResult :=mrOk;
 end;
 

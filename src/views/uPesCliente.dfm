@@ -22,7 +22,6 @@ object frmPesCliente: TfrmPesCliente
     Align = alClient
     Caption = 'Panel1'
     TabOrder = 0
-    ExplicitHeight = 105
     object lbBuscar: TLabel
       Left = 10
       Top = 16
