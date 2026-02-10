@@ -174,7 +174,6 @@ object frmCadCliente: TfrmCadCliente
       ActivePage = pgPrincipal
       Align = alClient
       TabOrder = 1
-      ExplicitLeft = 5
       object pgPrincipal: TTabSheet
         Caption = 'Principal'
         object gbDadosDoCrediario: TGroupBox

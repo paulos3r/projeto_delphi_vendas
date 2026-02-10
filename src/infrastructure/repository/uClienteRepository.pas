@@ -131,7 +131,7 @@ begin
       ' CIDADE= :CIDADE, ' +
       ' UF= :UF, ' +
       ' CEP= :CEP ' +
-      ' where CLEINTE_ID= :ID'
+      ' where CLIENTE_ID= :ID'
     );
 
     qry.ParamByName('NOME').AsString := ACliente.nome;
@@ -241,11 +241,6 @@ begin
     Result.ParamByName('CGC').AsString := cCnpj_cpf;
 
     Result.Open;
-    try
-
-    finally
-
-    end;
   except
     Result.Free;
     raise;

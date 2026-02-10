@@ -96,7 +96,9 @@ begin
 end;
 
 procedure TfrmCadCliente.btnGravarClick(Sender: TObject);
-var nome:string;
+var
+  id:Integer;
+  nome:string;
   data_Nascimento:TDate;
   status:String;
   cpf_cnpj:string;
@@ -114,14 +116,14 @@ var nome:string;
 
   FData_cadastro: TDateTime;
 begin
-
+  id:= StrToInt( edCodigo.Text );
   nome := edNome.Text;
   data_Nascimento:= dtpDataNascimento.Date;
   if rbAtivo.Enabled=true then status:='ATIVO' else status:='INATIVO';
 
   cpf_cnpj := RemoverMascara( medCpfCnpj.text );
 
-  condicao_id := FIdCondicaoPagamento; //StrToIntDef( edFormaPagamento.Text,0);
+  condicao_id := FIdCondicaoPagamento;
   limite := StrToIntDef( edLimite.Text,0);
   telefone:= edTelefone.Text;
   email:= edEmail.Text;
@@ -132,9 +134,16 @@ begin
   uf := edEstado.Text;
   cep:= edCep.Text;
 
+  if edCodigo.Text = EmptyStr then begin
+    FService.Gravar(nome,status,cpf_cnpj,telefone,email,endereco,bairro,cidade,uf,cep,limite,data_Nascimento,Now,condicao_id);
+    ShowMessage('Cadastro criado nome: ' + nome);
+  end
+  else begin
+    FService.Alterar(id,nome,status,cpf_cnpj,telefone,email,endereco,bairro,cidade,uf,cep,limite,data_Nascimento,Now,condicao_id);
+    ShowMessage('Cadastro alterado com sucessso');
+  end;
 
-  FService.Gravar(nome,status,cpf_cnpj,telefone,email,endereco,bairro,cidade,uf,cep,limite,data_Nascimento,Now,condicao_id);
-
+  LimparCampos;
 end;
 
 procedure TfrmCadCliente.btnPesquisarClick(Sender: TObject);

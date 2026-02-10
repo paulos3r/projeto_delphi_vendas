@@ -74,9 +74,12 @@ var
 begin
   cliente := TCliente.Create;
 
+
   Validar(ANome,AStatus,ACpf_cnpj,ALimite,ACondicao_id);
 
-  cliente.DefinirId( ACondicao_id );
+  cliente.DefinirId(Cid);
+  cliente.nome := ANome;
+  cliente.condicao_id:=ACondicao_id ;
   cliente.data_nascimento := AData_Nascimento;
   cliente.status   := AStatus;
   cliente.cpf_cnpj := ACpf_cnpj;
@@ -94,7 +97,7 @@ begin
 
   cliente.condicao_id:= ACondicao_id;
 
-  FRepository.Gravar(cliente);
+  FRepository.Alterar(cliente);
 
 end;
 
